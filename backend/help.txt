@@ -1,0 +1,14 @@
+
+// GET - Get / List
+// POST - Create
+// PUT - Replace / edit (update)
+// PATCH - Edit (update)
+// DELETE - Delete
+
+// 100-199 -> Inforational Responses
+// 200-299 -> Success
+// 300-399 -> Redirect
+// 400-499 -> Client Error
+// 500-599 -> Server Error
+
+// JSON -> JavaScript Object Notation
