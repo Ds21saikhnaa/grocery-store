@@ -9,6 +9,7 @@ const {
   onSnapshot,
   addDoc,
   query,
+  getDocs,
   orderBy,} = require("firebase/firestore");
 const app = express();
 const port = 8080;
@@ -33,18 +34,18 @@ const {
 const db = getFirestore()
 let data = [
   {
-    id: 1,
-    api: API_KEY,
-    title: "Fits 15 Laptops",
-    price: 109.95,
-    description: "Stash your laptop",
-    category: "men's clothing",
-    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    rating: {
-      rate: 3.9,
-      count: 120,
-    },
-  },
+    "id":1,
+    "api":"API_KEY",
+    "title":"Fits 15 Laptops",
+    "price":109.95,
+    "description":"Stash your laptop",
+    "category":"men's clothing",
+    "image":"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "rating":{
+       "rate":3.9,
+       "count":120
+    } 
+  }
 ]
 app.post("/login", (req, res) => {
   console.log(req.query);
@@ -57,31 +58,26 @@ app.post("/login", (req, res) => {
 app.post("/logout", (req, res) => {
   res.send("OK");
 });
-app.get("/products", (req, res) => {
+app.get("/products", async(req, res) => {
   console.log(req.query);
   console.log(req.body);
-  const data = req.body;
-  res.send(req.body);
+  const querySnapshot = await getDocs(collection(db, "datas"));
+  const products = []
+  for (const doc of querySnapshot.docs) {
+      products.push({
+          id: doc.id,
+          ...doc.data(),
+      })
+  }
+
+  res.send(products);
 });
 app.post("/products", async(req, res) => {
   console.log(req.query);
   console.log(req.body);
-  // const data = req.body
-  req.body =   {
-    id: 1,
-     api: API_KEY,
-     title: "Fits 15 Laptops",
-     price: 109.95,
-     description: "Stash your laptop",
-     category: "men's clothing",
-     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-     rating: {
-       rate: 3.9,
-       count: 120,
-     },
-}
+  const data = req.body
   const citiesRef = collection(db, "datas");
-  await setDoc(doc(citiesRef, '2ysqgMf0p8qurWHoof9o'),req.body)
+  await addDoc(citiesRef, (data))
   res.send(req.body);
 });
 app.listen(port, () => {
