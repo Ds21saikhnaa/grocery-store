@@ -1,7 +1,4 @@
 import "../App.css";
-import axios from "axios";
-// import { AddToList } from "../components"
-// <AddToList />
 export const Add = ({
   setCat,
   setName,

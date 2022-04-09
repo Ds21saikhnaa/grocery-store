@@ -13,19 +13,16 @@ function App() {
   const [flag, setFlag] = useState(false);
   const fn = async () => {
     await axios.post(
-      `http://localhost:8080/products`,
-      {
-        params: {
-          name: name,
-          cat: cat,
-          price: price,
-          image: image,
-          des: des,
-          id: id,
-        },
-      }
-
-      // ?name=${name}&cat=${cat}&price=${price}&image=${image}&des=${des}&id=${id}`
+      `http://localhost:8080/products`,(
+        {
+            id: id,
+            name: name,
+            category: cat,
+            price: price,
+            image: image,
+            description: des,
+        }
+      )
     );
   };
   return (

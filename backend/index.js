@@ -26,6 +26,7 @@ const {
   MESSAGING_SENDER_ID,
   APP_ID,
 } = process.env;
+console.log(API_KEY);
 firebaseConfig = initializeApp({
   apiKey: API_KEY,
   authDomain: AUTH_DOMAIN,
@@ -35,21 +36,6 @@ firebaseConfig = initializeApp({
   appId: APP_ID,
 });
 const db = getFirestore();
-let data = [
-  {
-    id: 1,
-    api: "API_KEY",
-    title: "Fits 15 Laptops",
-    price: 109.95,
-    description: "Stash your laptop",
-    category: "men's clothing",
-    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    rating: {
-      rate: 3.9,
-      count: 120,
-    },
-  },
-];
 app.post("/login", (req, res) => {
   console.log(req.query);
   console.log(req.body);
@@ -76,13 +62,60 @@ app.get("/products", async (req, res) => {
   res.send(products);
 });
 app.post("/products", async (req, res) => {
-  console.log(req.query);
+  // console.log(req.query);
   console.log(req.body);
   const data = req.body;
   const citiesRef = collection(db, "datas");
   await addDoc(citiesRef, data);
   res.send(req.body);
 });
+// Product detail
+app.get('/products/:id', (req, res) => {
+  // document.get
+  console.log(req.query)
+  console.log(req.params)
+
+  // get product from database by id
+  res.send({
+      name: 'Banana',
+      price: 123.312,
+      description: 'Blablabal',
+  })
+})
+
+// Edit product
+app.patch('/products/:id', (req, res) => {
+  // document.update document.set({ merge: true })
+  // get product from database by id
+  res.send({
+      name: 'Banana',
+      price: 123.312,
+      description: 'Blablabal',
+  })
+})
+
+app.put('/products/:id', (req, res) => {
+  // document.set({ merge: false })
+  // get product from database by id
+  res.send({
+      name: 'Banana',
+      price: 123.312,
+      description: 'Blablabal',
+  })
+})
+
+// Delete product
+app.delete('/products/:id', (req, res) => {
+  // document.delete()
+  res.status(204).send('This is delete method')
+})
+
+// Get current user details
+app.get('/me', (req, res) => {
+  // document.get
+  res.send('me')
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

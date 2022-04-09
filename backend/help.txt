@@ -1,14 +1,28 @@
 
-// GET - Get / List
-// POST - Create
-// PUT - Replace / edit (update)
-// PATCH - Edit (update)
-// DELETE - Delete
+ GET - Get / List
+ POST - Create
+ PUT - Replace / edit (update)
+ PATCH - Edit (update)
+ DELETE - Delete
 
-// 100-199 -> Inforational Responses
-// 200-299 -> Success
-// 300-399 -> Redirect
-// 400-499 -> Client Error
-// 500-599 -> Server Error
+ 100-199 -> Inforational Responses
+ 200-299 -> Success
+ 300-399 -> Redirect
+ 400-499 -> Client Error
+ 500-599 -> Server Error
 
-// JSON -> JavaScript Object Notation
+ JSON -> JavaScript Object Notation
+let data = [
+  {
+    id: 1,
+    title: "Fits 15 Laptops",
+    price: 109.95,
+    description: "Stash your laptop",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120,
+    },
+  },
+];
