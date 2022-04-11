@@ -6,6 +6,7 @@ const cors = require("cors");
 const {
   collection,
   setDoc,
+  getDoc,
   doc,
   onSnapshot,
   addDoc,
@@ -13,6 +14,7 @@ const {
   getDocs,
   orderBy,
 } = require("firebase/firestore");
+const { async } = require("@firebase/util");
 const app = express();
 const port = 8080;
 app.use(express.json());
@@ -62,59 +64,58 @@ app.get("/products", async (req, res) => {
   res.send(products);
 });
 app.post("/products", async (req, res) => {
-  // console.log(req.query);
   console.log(req.body);
   const data = req.body;
-  const citiesRef = collection(db, "datas");
-  await addDoc(citiesRef, data);
-  res.send(req.body);
+  const citiesRef = await addDoc(collection(db, "datas"), data);
+  res.send({
+    id: citiesRef.id,
+    ...data,
+  });
 });
 // Product detail
-app.get('/products/:id', (req, res) => {
-  // document.get
-  console.log(req.query)
-  console.log(req.params)
-
-  // get product from database by id
-  res.send({
-      name: 'Banana',
-      price: 123.312,
-      description: 'Blablabal',
-  })
-})
+app.get("/products/:id", async (req, res) => {
+  console.log(req.query);
+  console.log(req.params);
+  const getID = await getDoc(doc(db, "datas", req.params.id));
+  res.status(200).send({
+    id: getID.id,
+    ...getID.data(),
+  });
+});
 
 // Edit product
-app.patch('/products/:id', (req, res) => {
-  // document.update document.set({ merge: true })
-  // get product from database by id
+app.patch("/products/:id", async (req, res) => {
+  const editableFields = ["name", "description", "price"];
+  const getID = doc(db, "datas", req.params.id);
+  await setDoc(getID, req.body, { merge: true });
+  const list = await getDoc(getID);
   res.send({
-      name: 'Banana',
-      price: 123.312,
-      description: 'Blablabal',
-  })
-})
+    id: list.id,
+    ...list.data(),
+  });
+});
 
-app.put('/products/:id', (req, res) => {
+app.put("/products/:id", (req, res) => {
   // document.set({ merge: false })
   // get product from database by id
   res.send({
-      name: 'Banana',
-      price: 123.312,
-      description: 'Blablabal',
-  })
-})
+    name: "Banana",
+    price: 123.312,
+    description: "Blablabal",
+  });
+});
 
 // Delete product
-app.delete('/products/:id', (req, res) => {
+app.delete("/products/:id", (req, res) => {
   // document.delete()
-  res.status(204).send('This is delete method')
-})
+  res.status(204).send("This is delete method");
+});
 
 // Get current user details
-app.get('/me', (req, res) => {
+app.get("/me", (req, res) => {
   // document.get
-  res.send('me')
-})
+  res.send("me");
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
