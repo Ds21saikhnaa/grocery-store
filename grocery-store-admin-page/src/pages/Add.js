@@ -9,6 +9,8 @@ export const Add = ({
   fn,
   flag,
   setFlag,
+  deleteData,
+  get
 }) => {
   const eveCat = (e) => {
     setCat(e.target.value);
@@ -33,16 +35,26 @@ export const Add = ({
     fn();
     setFlag(!flag);
   };
+  const del = () => {
+    deleteData()
+  }
+  const seeData = () => {
+    get()
+  }
 
   return (
     <div className="navBar">
+      <div>ID input is here</div>
+      <input onChange={eveId} placeholder="ID"></input>
+      <div>data add</div>
       <input onChange={eveCat} placeholder="category"></input>
       <input onChange={eveName} placeholder="name"></input>
       <input onChange={evePrice} placeholder="price"></input>
-      <input onChange={eveId} placeholder="ID"></input>
       <input onChange={eveDes} placeholder="description"></input>
       <input onChange={eveImage} placeholder="image"></input>
+      <button onClick={seeData}>see data</button>
       <button onClick={onclick}>Add data</button>
+      <button onClick={del}>delete data</button>
     </div>
   );
 };

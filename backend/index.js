@@ -8,7 +8,7 @@ const {
   setDoc,
   getDoc,
   doc,
-  onSnapshot,
+  deleteDoc,
   addDoc,
   query,
   getDocs,
@@ -50,8 +50,6 @@ app.post("/logout", (req, res) => {
   res.send("OK");
 });
 app.get("/products", async (req, res) => {
-  console.log(req.query);
-  console.log(req.body);
   const querySnapshot = await getDocs(collection(db, "datas"));
   const products = [];
   for (const doc of querySnapshot.docs) {
@@ -95,20 +93,21 @@ app.patch("/products/:id", async (req, res) => {
   });
 });
 
-app.put("/products/:id", (req, res) => {
-  // document.set({ merge: false })
-  // get product from database by id
+app.put("/products/:id", async(req, res) => {
+  const getID = doc(db, "datas", req.params.id);
+  await setDoc(getID, req.body);
+  const list = await getDoc(getID);
   res.send({
-    name: "Banana",
-    price: 123.312,
-    description: "Blablabal",
+    id: list.id,
+    ...list.data(),
   });
 });
 
 // Delete product
-app.delete("/products/:id", (req, res) => {
-  // document.delete()
-  res.status(204).send("This is delete method");
+app.delete("/products/:id", async(req, res) => {
+  const getID = doc(db, "datas", req.params.id);
+  await deleteDoc(getID);
+  res.status(204).send({});
 });
 
 // Get current user details

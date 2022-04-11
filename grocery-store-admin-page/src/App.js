@@ -1,8 +1,7 @@
 import "./App.css";
-import { Add } from "./pages";
+import { Add, Render } from "./pages";
 import { useState } from "react";
 import axios from "axios";
-import cors from "cors";
 function App() {
   const [cat, setCat] = useState("");
   const [name, setName] = useState("");
@@ -11,11 +10,11 @@ function App() {
   const [des, setDes] = useState("");
   const [id, setId] = useState(0);
   const [flag, setFlag] = useState(false);
+  const [data, setData] = useState([]);
   const fn = async () => {
     await axios.post(
       `http://localhost:8080/products`,(
         {
-            id: id,
             name: name,
             category: cat,
             price: price,
@@ -25,6 +24,13 @@ function App() {
       )
     );
   };
+  const get = async () => {
+    const data = await axios.get(`http://localhost:8080/products`)
+    setData(data.data)
+  }
+  const deleteData = async() =>{
+    await axios.delete(`http://localhost:8080/products/${id}`)
+  }
   return (
     <div className="container">
       <Add
@@ -35,17 +41,14 @@ function App() {
         setPrice={setPrice}
         setImage={setImage}
         setDes={setDes}
+        deleteData={deleteData}
         flag={flag}
         setFlag={setFlag}
+        get={get}
       />
       <div className="App">
-        <h1>Grocery Store Admin Panel </h1>
-        <p>{cat}</p>
-        <p>{name}</p>
-        <p>{price}</p>
-        <img src={image} height="300px" width="300px"></img>
-        <p>{des}</p>
-        <p>{id}</p>
+        <h3>datas</h3>
+        <Render data={data}/>
       </div>
     </div>
   );

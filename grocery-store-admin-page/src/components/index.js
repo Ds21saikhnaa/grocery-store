@@ -1,1 +1,1 @@
-export { AddToList } from './AddToList';
+export { SeeToList } from './SeeToList';
