@@ -10,7 +10,9 @@ export const Add = ({
   flag,
   setFlag,
   deleteData,
-  get
+  get,
+  edit,
+  upData,
 }) => {
   const eveCat = (e) => {
     setCat(e.target.value);
@@ -36,11 +38,17 @@ export const Add = ({
     setFlag(!flag);
   };
   const del = () => {
-    deleteData()
-  }
+    deleteData();
+  };
   const seeData = () => {
-    get()
-  }
+    get();
+  };
+  const editData = () => {
+    edit();
+  };
+  const upDatas = () => {
+    upData();
+  };
 
   return (
     <div className="navBar">
@@ -54,6 +62,8 @@ export const Add = ({
       <input onChange={eveImage} placeholder="image"></input>
       <button onClick={seeData}>see data</button>
       <button onClick={onclick}>Add data</button>
+      <button onClick={editData}>edit data</button>
+      <button onClick={upDatas}>update data</button>
       <button onClick={del}>delete data</button>
     </div>
   );

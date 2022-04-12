@@ -10,11 +10,8 @@ const {
   doc,
   deleteDoc,
   addDoc,
-  query,
   getDocs,
-  orderBy,
 } = require("firebase/firestore");
-const { async } = require("@firebase/util");
 const app = express();
 const port = 8080;
 app.use(express.json());
@@ -93,7 +90,7 @@ app.patch("/products/:id", async (req, res) => {
   });
 });
 
-app.put("/products/:id", async(req, res) => {
+app.put("/products/:id", async (req, res) => {
   const getID = doc(db, "datas", req.params.id);
   await setDoc(getID, req.body);
   const list = await getDoc(getID);
@@ -104,7 +101,7 @@ app.put("/products/:id", async(req, res) => {
 });
 
 // Delete product
-app.delete("/products/:id", async(req, res) => {
+app.delete("/products/:id", async (req, res) => {
   const getID = doc(db, "datas", req.params.id);
   await deleteDoc(getID);
   res.status(204).send({});

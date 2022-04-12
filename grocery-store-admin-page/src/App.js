@@ -12,25 +12,39 @@ function App() {
   const [flag, setFlag] = useState(false);
   const [data, setData] = useState([]);
   const fn = async () => {
-    await axios.post(
-      `http://localhost:8080/products`,(
-        {
-            name: name,
-            category: cat,
-            price: price,
-            image: image,
-            description: des,
-        }
-      )
-    );
+    await axios.post(`http://localhost:8080/products`, {
+      name: name,
+      category: cat,
+      price: price,
+      image: image,
+      description: des,
+    });
   };
   const get = async () => {
-    const data = await axios.get(`http://localhost:8080/products`)
-    setData(data.data)
-  }
-  const deleteData = async() =>{
-    await axios.delete(`http://localhost:8080/products/${id}`)
-  }
+    const data = await axios.get(`http://localhost:8080/products`);
+    setData(data.data);
+  };
+  const deleteData = async () => {
+    await axios.delete(`http://localhost:8080/products/${id}`);
+  };
+  const edit = async () => {
+    await axios.patch(`http://localhost:8080/products/${id}`, {
+      name: name,
+      category: cat,
+      price: price,
+      image: image,
+      description: des,
+    });
+  };
+  const upData = async () => {
+    await axios.put(`http://localhost:8080/products/${id}`, {
+      name: name,
+      category: cat,
+      price: price,
+      image: image,
+      description: des,
+    });
+  };
   return (
     <div className="container">
       <Add
@@ -45,10 +59,12 @@ function App() {
         flag={flag}
         setFlag={setFlag}
         get={get}
+        edit={edit}
+        upData={upData}
       />
       <div className="App">
         <h3>datas</h3>
-        <Render data={data}/>
+        <Render data={data} />
       </div>
     </div>
   );
