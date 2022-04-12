@@ -48,6 +48,7 @@ function App() {
   return (
     <div className="container">
       <Add
+        id={id}
         fn={fn}
         setCat={setCat}
         setName={setName}
@@ -64,7 +65,15 @@ function App() {
       />
       <div className="App">
         <h3>datas</h3>
-        <Render data={data} />
+        <Render
+         data={data}
+         name={setName} 
+         id={setId}
+         setPrice={setPrice}
+         setImage={setImage}
+         setDes={setDes}
+         setCat={setCat}
+         />
       </div>
     </div>
   );

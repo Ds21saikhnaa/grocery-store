@@ -13,6 +13,7 @@ export const Add = ({
   get,
   edit,
   upData,
+  id
 }) => {
   const eveCat = (e) => {
     setCat(e.target.value);
@@ -53,7 +54,7 @@ export const Add = ({
   return (
     <div className="navBar">
       <div>ID input is here</div>
-      <input onChange={eveId} placeholder="ID"></input>
+      <input onChange={eveId} placeholder="ID" value={id}></input>
       <div>data add</div>
       <input onChange={eveCat} placeholder="category"></input>
       <input onChange={eveName} placeholder="name"></input>
