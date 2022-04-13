@@ -96,7 +96,6 @@ app.post("/login", async (req, res) => {
       message: "This username does not exist.",
     });
   }
-
   const hash = crypto.createHash("sha256").update(password).digest("hex");
   if (user.data().password !== hash) {
     return res.status(400).send({
