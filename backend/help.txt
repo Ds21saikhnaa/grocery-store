@@ -26,3 +26,4 @@ let data = [
     },
   },
 ];
+let cardItems = JSON.parse(localStorage.getItem('cardItems')) || [];
