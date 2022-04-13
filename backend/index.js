@@ -1,5 +1,5 @@
 const express = require("express");
-const crypto = require('crypto');
+const crypto = require("crypto");
 const dotenv = require("dotenv");
 const { getFirestore } = require("firebase/firestore");
 const { initializeApp } = require("firebase/app");
@@ -38,72 +38,79 @@ firebaseConfig = initializeApp({
 const db = getFirestore();
 const isAuthenticated = async (req, res, next) => {
   if (!req.headers.authorization) {
-      return res.status(402).send([]);
+    return res.status(402).send([]);
   }
-  const sessionDoc = await getDoc(doc(db, 'sessions', req.headers.authorization))
+  const sessionDoc = await getDoc(
+    doc(db, "sessions", req.headers.authorization)
+  );
   if (!sessionDoc.exists()) {
-      return res.status(403).send([]);
+    return res.status(403).send([]);
   }
 
   if (sessionDoc.data().expireDate.seconds <= new Date().getTime() / 1000) {
-      return res.status(403).send([]);
+    return res.status(403).send([]);
   }
 
-  const userDoc = await getDoc(doc(db, 'users', sessionDoc.data().user));
+  const userDoc = await getDoc(doc(db, "users", sessionDoc.data().user));
   req.user = userDoc;
 
   next();
-}
+};
 
 const isAdmin = (req, res, next) => {
   if (!req.user.data().isAdmin) {
-      return res.status(403).send({});
+    return res.status(403).send({});
   }
 
   next();
-}
-app.post('/register', async (req, res) => {
+};
+app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
-  const user = await getDoc(doc(db, "users", username))
-  if (user.exists()) { // User with this username does already exist.
-      return res.status(400).send({
-          'message': "This username already exists.",
-      });
+  const user = await getDoc(doc(db, "users", username));
+  if (user.exists()) {
+    // User with this username does already exist.
+    return res.status(400).send({
+      message: "This username already exists.",
+    });
   }
 
-  const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-  await setDoc(doc(db, 'users', username), {
-      password: hashedPassword,
+  const hashedPassword = crypto
+    .createHash("sha256")
+    .update(password)
+    .digest("hex");
+  await setDoc(doc(db, "users", username), {
+    password: hashedPassword,
   });
 
   res.send({ success: true });
-})
+});
 
-app.post("/login", async(req, res) => {
+app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-    const user = await getDoc(doc(db, "users", username))
-    if (!user.exists()) { // User with this username does not exist.
-        return res.status(400).send({
-            'message': "This username does not exist.",
-        });
-    }
-
-    const hash = crypto.createHash('sha256').update(password).digest('hex');
-    if (user.data().password !== hash) {
-        return res.status(400).send({
-            'message': "Wrong password!",
-        });
-    }
-
-    const token = crypto.randomUUID();
-    await setDoc(doc(db, 'sessions', token), {
-        user: user.id,
-        expireDate: new Date(Date.now() + 5 * 60 * 1000),
+  const user = await getDoc(doc(db, "users", username));
+  if (!user.exists()) {
+    // User with this username does not exist.
+    return res.status(400).send({
+      message: "This username does not exist.",
     });
+  }
 
-    res.send({ token });
+  const hash = crypto.createHash("sha256").update(password).digest("hex");
+  if (user.data().password !== hash) {
+    return res.status(400).send({
+      message: "Wrong password!",
+    });
+  }
+  const token = crypto.randomUUID();
+  await setDoc(doc(db, "sessions", username), {
+    user: user.id,
+    token: token,
+    expireDate: new Date(Date.now() + 5 * 60 * 1000),
+  });
+
+  res.send({ token });
 });
 
 app.post("/logout", (req, res) => {
@@ -146,12 +153,12 @@ app.patch("/products/:id", async (req, res) => {
   const editableFields = ["name", "description", "price", "image", "category"];
   for (const key of Object.keys(req.body)) {
     if (!editableFields.includes(key)) {
-        res.status(400).send({
-            message: `"${key}" field is not editable!`,
-        });
-        return;
+      res.status(400).send({
+        message: `"${key}" field is not editable!`,
+      });
+      return;
     }
-}
+  }
   const getID = doc(db, "datas", req.params.id);
   await setDoc(getID, req.body, { merge: true });
   const list = await getDoc(getID);
@@ -180,7 +187,6 @@ app.delete("/products/:id", async (req, res) => {
 
 // Get current user details
 app.get("/me", (req, res) => {
-  // document.get
   res.send("me");
 });
 
