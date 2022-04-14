@@ -74,7 +74,6 @@ app.post("/register", async (req, res) => {
       message: "This username already exists.",
     });
   }
-
   const hashedPassword = crypto
     .createHash("sha256")
     .update(password)
