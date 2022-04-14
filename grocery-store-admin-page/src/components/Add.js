@@ -13,7 +13,10 @@ export const Add = ({
   get,
   edit,
   upData,
-  id
+  id,
+  addCat,
+  getCat,
+  setCategory
 }) => {
   const eveCat = (e) => {
     setCat(e.target.value);
@@ -27,7 +30,10 @@ export const Add = ({
   const evePrice = (e) => {
     setPrice(e.target.value);
   };
-
+  const eveAdd = (e) => {
+    setCategory(e.target.value);
+  };
+  
   const eveImage = (e) => {
     setImage(e.target.value);
   };
@@ -50,6 +56,12 @@ export const Add = ({
   const upDatas = () => {
     upData();
   };
+  const getc = () => {
+    getCat();
+  };
+  const addc = () => {
+    addCat();
+  };
 
   return (
     <div className="navBar">
@@ -61,7 +73,11 @@ export const Add = ({
       <input onChange={evePrice} placeholder="price"></input>
       <input onChange={eveDes} placeholder="description"></input>
       <input onChange={eveImage} placeholder="image"></input>
+      <div>add to category</div>
+      <input onChange={eveAdd} placeholder="add to category"></input>
+      <button onClick={addc}>add category</button>
       <button onClick={seeData}>see data</button>
+      <button onClick={getc}>see cat</button>
       <button onClick={onclick}>Add data</button>
       <button onClick={editData}>edit data</button>
       <button onClick={upDatas}>update data</button>

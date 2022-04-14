@@ -1,21 +1,8 @@
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useEffect, useState } from "react";
-export const Login = () => {
-  const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const token = window.localStorage.getItem("token");
-  const fn = async () => {
-    const a = await axios.post(`http://localhost:8080/login`, {
-      username: username,
-      password: password,
-    });
-    console.log(a.data.token);
-    await window.localStorage.setItem("token", a.data.token);
-    if (token) navigate("/admin");
-  };
+import { useEffect } from "react";
+export const Login = ({fn, setPassword, setUsername, stat}) => {
+  const navigate = useNavigate(); 
   const name = (e) => {
     setUsername(e.target.value);
   };
@@ -26,13 +13,13 @@ export const Login = () => {
     fn();
   };
   useEffect(() => {
-    //   axios.get()
     const gettingToken = async () => {
-      if (token) navigate("/admin");
-      else navigate("/");
+      if (stat === 200){ 
+        navigate("/admin");
+      }
     };
     gettingToken();
-  }, []);
+  }, [stat]);
 
   return (
     <div className="login">

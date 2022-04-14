@@ -1,14 +1,8 @@
-import axios from "axios"
-import { useState } from 'react'
-export const Register = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('')
-    const fn = async () => {
-        await axios.post(`http://localhost:8080/register`, {
-            username: username,
-            password: password,
-          });
-    }
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import e from "cors";
+export const Register = ({fn, setUsername, setPassword, stat}) => {
+    const navigate = useNavigate();
     const name = (e) => {
         setUsername(e.target.value)
     }
@@ -18,6 +12,14 @@ export const Register = () => {
     const log = () => {
         fn()
     }
+    useEffect(() => {
+        const gettingToken = async () => {
+          if (stat === 200){ 
+            navigate("/");
+          }else if(stat !== 200) alert('ali hediin iim nerte hun bn ahin oroldono uu!')
+        };
+        gettingToken();
+      }, [stat]);
     return(
         <div className="login">
             <div className='miniCon'>

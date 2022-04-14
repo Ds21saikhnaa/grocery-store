@@ -1,5 +1,4 @@
-export { Add } from './Add';
-export { Render } from './Render';
 export { Login } from './Login';
+export { Admin } from './Admin'
 export { Register } from './Register' 
 

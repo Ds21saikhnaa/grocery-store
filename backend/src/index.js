@@ -1,10 +1,11 @@
-const express = require("express");
-const crypto = require("crypto");
-const dotenv = require("dotenv");
-const { getFirestore } = require("firebase/firestore");
-const { initializeApp } = require("firebase/app");
-const cors = require("cors");
-const {
+import express from "express";
+import crypto from "crypto";
+import dotenv from "dotenv";
+import { getFirestore } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import cors from "cors";
+import fs from "fs"
+import {
   collection,
   setDoc,
   getDoc,
@@ -12,12 +13,13 @@ const {
   deleteDoc,
   addDoc,
   getDocs,
-} = require("firebase/firestore");
+} from "firebase/firestore";
 const app = express();
 const port = 8080;
 app.use(express.json());
 app.use(cors());
 dotenv.config();
+const file = fs.readFileSync('../public/2.png', (err)=>console.log(err.message));
 const {
   API_KEY,
   AUTH_DOMAIN,
@@ -27,7 +29,7 @@ const {
   APP_ID,
 } = process.env;
 console.log(API_KEY);
-firebaseConfig = initializeApp({
+const firebaseConfig = initializeApp({
   apiKey: API_KEY,
   authDomain: AUTH_DOMAIN,
   projectId: PROJECT_ID,
@@ -66,7 +68,6 @@ const isAdmin = (req, res, next) => {
 };
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
-
   const user = await getDoc(doc(db, "users", username));
   if (user.exists()) {
     // User with this username does already exist.
@@ -114,6 +115,26 @@ app.post("/login", async (req, res) => {
 app.post("/logout", (req, res) => {
   res.send("OK");
 });
+app.get("/category", async(req, res) => {
+  const querySnapshot = await getDocs(collection(db, "category"));
+  const products = [];
+  for (const doc of querySnapshot.docs) {
+    products.push({
+      id: doc.id,
+      ...doc.data(),
+    });
+  }
+  res.send(products)
+})
+app.post("/category", async(req, res) => {
+  console.log(req.body);
+  const data = req.body;
+  const citiesRef = await addDoc(collection(db, "category"), data);
+  res.send({
+    id: citiesRef.id,
+    ...data,
+  });
+})
 app.get("/products", async (req, res) => {
   const querySnapshot = await getDocs(collection(db, "datas"));
   const products = [];
