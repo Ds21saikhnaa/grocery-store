@@ -1,4 +1,5 @@
 import "../App.css";
+import { Login } from "../pages";
 export const Add = ({
   setCat,
   setName,
@@ -16,7 +17,7 @@ export const Add = ({
   id,
   addCat,
   getCat,
-  setCategory
+  setCategory,
 }) => {
   const eveCat = (e) => {
     setCat(e.target.value);
@@ -33,10 +34,15 @@ export const Add = ({
   const eveAdd = (e) => {
     setCategory(e.target.value);
   };
-  
+
   const eveImage = (e) => {
-    setImage(e.target.value);
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = async () => {
+      await setImage(reader.result);
+    };
   };
+  // eveImage();
   const eveDes = (e) => {
     setDes(e.target.value);
   };
@@ -72,7 +78,7 @@ export const Add = ({
       <input onChange={eveName} placeholder="name"></input>
       <input onChange={evePrice} placeholder="price"></input>
       <input onChange={eveDes} placeholder="description"></input>
-      <input onChange={eveImage} placeholder="image"></input>
+      <input type="file" onChange={eveImage} placeholder="image"></input>
       <div>add to category</div>
       <input onChange={eveAdd} placeholder="add to category"></input>
       <button onClick={addc}>add category</button>

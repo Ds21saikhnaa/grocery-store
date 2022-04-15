@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import cors from "cors";
-import fs from "fs"
+import fs from "fs";
 import {
   collection,
   setDoc,
@@ -19,7 +19,7 @@ const port = 8080;
 app.use(express.json());
 app.use(cors());
 dotenv.config();
-const file = fs.readFileSync('../public/2.png', (err)=>console.log(err.message));
+// const file = fs.readFileSync('../public/2.png', (err)=>console.log(err.message));
 const {
   API_KEY,
   AUTH_DOMAIN,
@@ -115,7 +115,7 @@ app.post("/login", async (req, res) => {
 app.post("/logout", (req, res) => {
   res.send("OK");
 });
-app.get("/category", async(req, res) => {
+app.get("/category", async (req, res) => {
   const querySnapshot = await getDocs(collection(db, "category"));
   const products = [];
   for (const doc of querySnapshot.docs) {
@@ -124,9 +124,9 @@ app.get("/category", async(req, res) => {
       ...doc.data(),
     });
   }
-  res.send(products)
-})
-app.post("/category", async(req, res) => {
+  res.send(products);
+});
+app.post("/category", async (req, res) => {
   console.log(req.body);
   const data = req.body;
   const citiesRef = await addDoc(collection(db, "category"), data);
@@ -134,7 +134,7 @@ app.post("/category", async(req, res) => {
     id: citiesRef.id,
     ...data,
   });
-})
+});
 app.get("/products", async (req, res) => {
   const querySnapshot = await getDocs(collection(db, "datas"));
   const products = [];
@@ -150,10 +150,19 @@ app.get("/products", async (req, res) => {
 app.post("/products", async (req, res) => {
   console.log(req.body);
   const data = req.body;
-  const citiesRef = await addDoc(collection(db, "datas"), data);
-  res.send({
-    id: citiesRef.id,
+  const base64Data = data.image.split(";base64,").pop();
+  const imgaebuffer = new Buffer.from(base64Data, "base64");
+  const path = `../public/images/${data.name}.png`;
+  fs.writeFileSync(path, imgaebuffer);
+  // const citiesRef = await addDoc(collection(db, "datas"), data);
+  const citiesRef = await addDoc(collection(db, "datas"), {
     ...data,
+    image: citiesRef.name,
+  });
+  res.send({
+    id: "dafshuo",
+    // id: citiesRef.id,
+    // ...data,
   });
 });
 // Product detail

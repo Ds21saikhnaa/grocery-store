@@ -1,8 +1,8 @@
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-export const Login = ({fn, setPassword, setUsername, stat}) => {
-  const navigate = useNavigate(); 
+export const Login = ({ fn, setPassword, setUsername, stat }) => {
+  const navigate = useNavigate();
   const name = (e) => {
     setUsername(e.target.value);
   };
@@ -14,8 +14,10 @@ export const Login = ({fn, setPassword, setUsername, stat}) => {
   };
   useEffect(() => {
     const gettingToken = async () => {
-      if (stat === 200){ 
+      if (stat === 200) {
         navigate("/admin");
+
+        // navigate("/login");
       }
     };
     gettingToken();
