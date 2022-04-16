@@ -83,7 +83,7 @@ export const Add = ({
       <input onChange={eveAdd} placeholder="add to category"></input>
       <button onClick={addc}>add category</button>
       <button onClick={seeData}>see data</button>
-      <button onClick={getc}>see cat</button>
+      <button onClick={getc}>see category</button>
       <button onClick={onclick}>Add data</button>
       <button onClick={editData}>edit data</button>
       <button onClick={upDatas}>update data</button>

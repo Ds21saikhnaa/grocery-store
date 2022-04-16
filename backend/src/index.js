@@ -16,10 +16,10 @@ import {
 } from "firebase/firestore";
 const app = express();
 const port = 8080;
+app.use(express.static('../public'))
 app.use(express.json());
 app.use(cors());
 dotenv.config();
-// const file = fs.readFileSync('../public/2.png', (err)=>console.log(err.message));
 const {
   API_KEY,
   AUTH_DOMAIN,
@@ -148,7 +148,7 @@ app.get("/products", async (req, res) => {
   res.send(products);
 });
 app.post("/products", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const data = req.body;
   const base64Data = data.image.split(";base64,").pop();
   const imgaebuffer = new Buffer.from(base64Data, "base64");
@@ -157,12 +157,11 @@ app.post("/products", async (req, res) => {
   // const citiesRef = await addDoc(collection(db, "datas"), data);
   const citiesRef = await addDoc(collection(db, "datas"), {
     ...data,
-    image: citiesRef.name,
+    image: `http://localhost:8080/images/${data.name}.png`,
   });
   res.send({
-    id: "dafshuo",
-    // id: citiesRef.id,
-    // ...data,
+    id: citiesRef.id,
+    ...data,
   });
 });
 // Product detail

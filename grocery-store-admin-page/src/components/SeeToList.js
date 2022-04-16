@@ -19,6 +19,9 @@ export const SeeToList = ({data, name, id, cat, price, des, catData, image}) => 
                     <p>name:{el.name}</p>
                     <p>dis:{el.description}</p>
                     <p>cat:{el.category}</p>
+                    <div>
+                        <img src={el.image} height="100px" width="100px"></img>
+                    </div>
                     <button onClick={()=>{onClick([el.name, el.id, el.category,el.price,el.description,el.image])}}>editor</button>
                 </div>
             ))}
