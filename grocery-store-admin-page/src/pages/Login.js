@@ -14,7 +14,7 @@ export const Login = ({ fn, setPassword, setUsername, stat }) => {
   };
   useEffect(() => {
     const gettingToken = async () => {
-      if (stat === 200) {
+      if (stat.status === 200) {
         navigate("/admin");
 
         // navigate("/login");
@@ -28,7 +28,7 @@ export const Login = ({ fn, setPassword, setUsername, stat }) => {
       <div className="miniCon">
         <h1>login</h1>
         <input placeholder="username" onChange={name}></input>
-        <input placeholder="password" onChange={pass}></input>
+        <input placeholder="password" type="password" onChange={pass}></input>
         <button onClick={log}>login</button>
         <Link to="/register">
           <div>sign-up</div>

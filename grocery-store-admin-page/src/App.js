@@ -35,7 +35,7 @@ function App() {
       password: password,
     });
     await window.localStorage.setItem("token", a.data.token);
-    setStat(a.status);
+    setStat(a);
     const token = window.localStorage.getItem("token");
     setTok(token);
   };
@@ -60,7 +60,6 @@ function App() {
       description: des,
     });
   };
-  console.log(image);
   //get to data
   const get = async () => {
     const data = await axios.get(`http://localhost:8080/products/`);
@@ -128,6 +127,7 @@ function App() {
               setName={setName}
               setId={setId}
               tok={tok}
+              stat={stat}
               setPrice={setPrice}
               setImage={setImage}
               setDes={setDes}

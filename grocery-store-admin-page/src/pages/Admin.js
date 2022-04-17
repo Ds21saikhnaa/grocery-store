@@ -22,6 +22,7 @@ export const Admin = ({
     addCat,
     getCat,
     catData,
+    stat,
     setCategory
 }) => {
     const navigate = useNavigate();
