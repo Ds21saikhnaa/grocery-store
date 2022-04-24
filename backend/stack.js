@@ -2,17 +2,10 @@ class Stack {
   constructor() {
     this.top = null;
   }
-
-  // add new element to stack
-  push(node) {
+ push(node) {
     node.prev = this.top;
     this.top = node;
-    // const newNode = new Node(node);
-    // newNode.next = this.top;
-    // this.top = newNode;
   }
-
-  // remove top element
   pop() {
     let a = this.top;
     let b = a.prev;
@@ -20,19 +13,12 @@ class Stack {
     this.top = b;
     return a;
   }
-
-  // return top;
   peek() {
     return this.top;
-    // if (this.isEmpty()) return undefined;
-    // return this.top.value;
   }
-
-  // checks stack is empty
   isEmpty() {
     return this.top === null;
   }
-
   print() {
     const pri = (node) => {
       if (node.prev) {
