@@ -11,7 +11,7 @@ export const Render = ({
   catData
 }) => {
   return (
-      <div className="row">
+      <div className="column">
         <SeeToList
           data={data}
           name={name}
