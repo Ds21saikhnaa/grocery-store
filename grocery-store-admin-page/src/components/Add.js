@@ -1,5 +1,6 @@
 import "../App.css";
 import { Login } from "../pages";
+import { Button } from "@mui/material";
 export const Add = ({
   setCat,
   setName,
@@ -88,6 +89,9 @@ export const Add = ({
       <button onClick={editData}>edit data</button>
       <button onClick={upDatas}>update data</button>
       <button onClick={del}>delete data</button>
+      <Button variant="text">Text</Button>
+      <Button variant="contained">Contained</Button>
+      <Button variant="outlined">Outlined</Button>
     </div>
   );
 };

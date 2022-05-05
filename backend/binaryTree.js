@@ -1,64 +1,73 @@
-// class Node {
-//   constructor(val) {
-//       this.left = null;
-//       this.right = null;
+class Node {
+  constructor(value, left, right) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+const inorder = (node) => {
+  if (node === null) return;
+  inorder(node.left);
+  console.log(node.value);
+  // visit(node);
+  inorder(node.right);
+};
+const preorder = (node) => {
+  if (node === null) return;
+  console.log(node.value);
+  // visit(node);
+  preorder(node.left);
+  preorder(node.right);
+};
+const postorder = (node) => {
+  if (node === null) return;
+  postorder(node.left);
+  postorder(node.right);
+  console.log(node.value);
+  // visit(node);
+};
+const root = new Node(1);
+root.left = new Node(2);
+root.right = new Node(3);
+root.left.left = new Node(4);
+root.left.right = new Node(5);
+inorder();
+// var invertTree = function (root) {
+//   if (root) {
+//     invert(root);
+//     invertTree(root.left);
+//     invertTree(root.right);
 //   }
-// }
-function TreeNode(data) {
-  this.data = data;
-  this.left = null;
-  this.right = null;
-}
-
-function createTree() {
-  let root = new TreeNode(10);
-
-  root.left = new TreeNode(20);
-  root.right = new TreeNode(30);
-
-  root.left.left = new TreeNode(40);
-  root.left.right = new TreeNode(50);
-
-  root.right.left = new TreeNode(60);
-  root.right.right = new TreeNode(70);
-
-  root.left.left.right = new TreeNode(80);
-  return root;
-}
-function preOrder(root) {
-  if (root === null) return;
-
-  // print the node data
-  console.log(root.data);
-
-  // goto left
-  preOrder(root.left);
-
-  // goto right
-  preOrder(root.right);
-}
-createTree();
-preOrder();
-// const inOrder = (root) => {
-//   console.log(root.data);
-//   inOrder(root.left);
-//   inOrder(root.right);
+//   return root;
 // };
-// inOrder();
-// createTree();
-
-// inOrder() {
-//     let visited = [],
-//         current = this.root;
-
-//     let traverse = node => {
-//       if (node.left) traverse(node.left);
-//       visited.push(node.val);
-//       if (node.right) traverse(node.right);
-//     };
-
-//     traverse(current);
-//     return visited;
+// const invert = (node) => {
+//   const left = node.left;
+//   node.left = node.right;
+//   node.right = left;
+// };
+// //dasdas
+// var findTilt = function (root) {
+//   tilt = 0;
+//   postOrder(root);
+//   return tilt;
+// };
+// const postOrder = (root) => {
+//   if (root == undefined) {
+//     return 0;
 //   }
-
-//   console.log(tree.inOrder()); // [ 3, 9, 11, 14, 19, 20, 31, 57, 62, 72 ]
+//   let l = postOrder(root.left);
+//   let r = postOrder(root.right);
+//   tilt += Math.abs(r - l);
+//   return root.val + l + r;
+// };
+var isBalanced = function (root) {
+  const bool = (root) => {
+    if (!root) return true;
+    const left = bool(root.left);
+    const right = bool(root.right);
+    if (left === false || right === false || Math.abs(left - right) > 1)
+      return false;
+    return 1 + Math.max(left, right);
+  };
+  return bool(root);
+};
