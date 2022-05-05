@@ -1,7 +1,8 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login, Admin, Register } from "./pages";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { UserContextPro } from "./ctx";
 import axios from "axios";
 function App() {
   const [cat, setCat] = useState("");
@@ -91,58 +92,61 @@ function App() {
   };
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Login
-              fn={login}
-              setUsername={setUsername}
-              setPassword={setPassword}
-              stat={stat}
-            />
-          }
-        ></Route>
-        <Route
-          path="/register"
-          element={
-            <Register
-              fn={register}
-              setUsername={setUsername}
-              setPassword={setPassword}
-              stat={stat1}
-            />
-          }
-        ></Route>
-        <Route
-          path="/admin"
-          element={
-            <Admin
-              id={id}
-              addCat={addCat}
-              fn={fn}
-              setCat={setCat}
-              catData={catData}
-              setCategory={setCategory}
-              setName={setName}
-              setId={setId}
-              tok={tok}
-              stat={stat}
-              setPrice={setPrice}
-              setImage={setImage}
-              setDes={setDes}
-              getCat={getCat}
-              deleteData={deleteData}
-              flag={flag}
-              setFlag={setFlag}
-              get={get}
-              edit={edit}
-              data={data}
-              upData={upData}
-            />
-          }
-        />
-      </Routes>
+      <UserContextPro>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Login
+                fn={login}
+                setUsername={setUsername}
+                setPassword={setPassword}
+                stat={stat}
+              />
+            }
+          ></Route>
+          <Route
+            path="/register"
+            element={
+              <Register
+                fn={register}
+                setUsername={setUsername}
+                setPassword={setPassword}
+                stat={stat1}
+              />
+            }
+          ></Route>
+          <Route
+            path="/admin"
+            element={
+              <Admin
+                id={id}
+                addCat={addCat}
+                fn={fn}
+                setCat={setCat}
+                catData={catData}
+                setCategory={setCategory}
+                setName={setName}
+                setId={setId}
+                tok={tok}
+                stat={stat}
+                setPrice={setPrice}
+                setImage={setImage}
+                setDes={setDes}
+                getCat={getCat}
+                deleteData={deleteData}
+                flag={flag}
+                setFlag={setFlag}
+                get={get}
+                edit={edit}
+                data={data}
+                upData={upData}
+              />
+            }
+          />
+          <Route path="*" element={<h1>404 page not found</h1>} />
+        </Routes>
+      </UserContextPro>
     </BrowserRouter>
   );
 }

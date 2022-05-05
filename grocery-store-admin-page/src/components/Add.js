@@ -1,6 +1,22 @@
 import "../App.css";
 import { Login } from "../pages";
-import { Button } from "@mui/material";
+import { useState } from "react";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Drawer,
+  Typography,
+  SideBar,
+  ProductList,
+  NavBar,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 export const Add = ({
   setCat,
   setName,
@@ -20,6 +36,7 @@ export const Add = ({
   getCat,
   setCategory,
 }) => {
+  const [toggleDrawer, setToggleDrawer] = useState(false);
   const eveCat = (e) => {
     setCat(e.target.value);
   };
@@ -69,6 +86,9 @@ export const Add = ({
   const addc = () => {
     addCat();
   };
+  const handleOpen = (event) => {
+    setToggleDrawer(!toggleDrawer);
+  };
 
   return (
     <div className="navBar">
@@ -83,15 +103,19 @@ export const Add = ({
       <div>add to category</div>
       <input onChange={eveAdd} placeholder="add to category"></input>
       <button onClick={addc}>add category</button>
-      <button onClick={seeData}>see data</button>
+      <Button
+        variant="contained"
+        onClick={seeData}
+        style={{ fontSize: "10px" }}
+      >
+        see data
+      </Button>
       <button onClick={getc}>see category</button>
       <button onClick={onclick}>Add data</button>
       <button onClick={editData}>edit data</button>
       <button onClick={upDatas}>update data</button>
       <button onClick={del}>delete data</button>
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
+      {/* <Button variant="outlined">Outlined</Button> */}
     </div>
   );
 };

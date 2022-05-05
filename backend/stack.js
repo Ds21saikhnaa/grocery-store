@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // class Stack {
 //   constructor() {
 //     this.top = null;
@@ -38,6 +39,39 @@
 //     pri(this.top);
 //   }
 // }
+=======
+class Stack {
+  constructor() {
+    this.top = null;
+  }
+ push(node) {
+    node.prev = this.top;
+    this.top = node;
+  }
+  pop() {
+    let a = this.top;
+    let b = a.prev;
+    a.prev = null;
+    this.top = b;
+    return a;
+  }
+  peek() {
+    return this.top;
+  }
+  isEmpty() {
+    return this.top === null;
+  }
+  print() {
+    const pri = (node) => {
+      if (node.prev) {
+        pri(node.prev);
+      }
+      console.log(node.value);
+    };
+    pri(this.top);
+  }
+}
+>>>>>>> 93721721be9d086941d1d56d312d82d58f2e0c76
 
 // class Node {
 //   constructor(value) {
