@@ -1,27 +1,9 @@
 import { SeeToList } from "../components";
-import '../App.css'
-export const Render = ({
-  data,
-  name,
-  id,
-  setPrice,
-  setImage,
-  setDes,
-  setCat,
-  catData
-}) => {
+import '../App.css';
+export const Render = () => {
   return (
       <div className="column">
-        <SeeToList
-          data={data}
-          name={name}
-          id={id}
-          cat={setCat}
-          des={setDes}
-          price={setPrice}
-          catData={catData}
-          image={setImage}
-        />
+        <SeeToList/>
       </div>
   );
 };

@@ -1,7 +1,10 @@
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-export const Login = ({ fn, setPassword, setUsername, stat }) => {
+import { useContext } from "react";
+import { DataContext } from "../App";
+export const Login = () => {
+  const {setPassword, setUsername, stat, login} = useContext(DataContext);
   const navigate = useNavigate();
   const name = (e) => {
     setUsername(e.target.value);
@@ -10,7 +13,7 @@ export const Login = ({ fn, setPassword, setUsername, stat }) => {
     setPassword(e.target.value);
   };
   const log = () => {
-    fn();
+    login();
   };
   useEffect(() => {
     const gettingToken = async () => {

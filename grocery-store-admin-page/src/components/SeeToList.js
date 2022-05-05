@@ -1,22 +1,17 @@
 import "../App.css";
+import { DataContext } from "../App";
+import { useContext } from "react";
+// import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-export const SeeToList = ({
-  data,
-  name,
-  id,
-  cat,
-  price,
-  des,
-  catData,
-  image,
-}) => {
+export const SeeToList = () => {
+  const { catData, setName, setPrice, data, setImage, setDes, id, } = useContext(DataContext)
   const onClick = (title) => {
     id(title[0]);
-    name(title[1]);
-    // cat(title[2]);
-    price(title[2]);
-    // des(title[4]);
-    image(title[3]);
+    setName(title[1]);
+    // setCat(title[2]);
+    setPrice(title[2]);
+    // setDes(title[4]);
+    setImage(title[3]);
     console.log(title[1]);
   };
   const columns = [
@@ -67,7 +62,7 @@ export const SeeToList = ({
     },
   ];
   let arr = [];
-  data.map((el, key) =>
+  data.map((el) =>
     arr.push({
       id: el.id,
       Name: el.name,
@@ -84,19 +79,7 @@ export const SeeToList = ({
         <div className="goods">
           <DataGrid rows={rows} columns={columns} pageSize={5} />
         </div>
-        {/* {data.map((el, key) => (
-                <div className="goods" key={key} >
-                    <p >id:{el.id}</p>
-                    <p>price:{el.price}</p>
-                    <p>name:{el.name}</p>
-                    <p>dis:{el.description}</p>
-                    <p>cat:{el.category}</p>
-                    <div>
-                        <img src={el.image} height="100px" width="100px"></img>
-                    </div>
-                    <button onClick={()=>{onClick([el.name, el.id, el.category,el.price,el.description,el.image])}}>editor</button>
-                </div>
-            ))} */}
+        {/*<button onClick={()=>{onClick([el.name, el.id, el.category,el.price,el.description,el.image])}}>editor</button>*/}
       </div>
       <div>
         <h3>category</h3>

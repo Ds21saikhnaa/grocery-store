@@ -1,41 +1,13 @@
 import "../App.css";
-import { Login } from "../pages";
+// import { Login } from "../pages";
+import { useContext } from "react";
+import { DataContext } from "../App";
 import { useState } from "react";
 import {
-  AppBar,
-  Box,
   Button,
-  IconButton,
-  Toolbar,
-  Drawer,
-  Typography,
-  SideBar,
-  ProductList,
-  NavBar,
-  List,
-  ListItem,
-  ListItemText,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-export const Add = ({
-  setCat,
-  setName,
-  setId,
-  setPrice,
-  setImage,
-  setDes,
-  fn,
-  flag,
-  setFlag,
-  deleteData,
-  get,
-  edit,
-  upData,
-  id,
-  addCat,
-  getCat,
-  setCategory,
-}) => {
+export const Add = () => {
+  const { setCategory, setCat, setName, setId, setPrice, setImage, setDes, flag, setFlag, id, addCat, fn, deleteData,get,edit, upData,getCat } = useContext(DataContext)
   const [toggleDrawer, setToggleDrawer] = useState(false);
   const eveCat = (e) => {
     setCat(e.target.value);

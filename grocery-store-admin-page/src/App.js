@@ -3,7 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login, Admin, Register } from "./pages";
 import { useState } from "react";
 import { UserContextPro } from "./ctx";
+import { createContext } from "react";
 import axios from "axios";
+import { Add, Render } from "./components";
+export const DataContext = createContext();
 function App() {
   const [cat, setCat] = useState("");
   const [name, setName] = useState("");
@@ -93,62 +96,39 @@ function App() {
   return (
     <BrowserRouter>
       <UserContextPro>
+        <DataContext.Provider value={{login,setUsername,setPassword,stat,register,stat1,id,fn,addCat,setCat,catData,
+          setCategory,setName,setId,tok,setPrice,setImage,setDes,getCat,deleteData,flag,setFlag,get,edit, data,upData
+          }}>
         <Routes>
           <Route
             path="/"
             element={
-              <Login
-                fn={login}
-                setUsername={setUsername}
-                setPassword={setPassword}
-                stat={stat}
-              />
+              <Login/>
             }
           ></Route>
           <Route
             path="/register"
             element={
-              <Register
-                fn={register}
-                setUsername={setUsername}
-                setPassword={setPassword}
-                stat={stat1}
-              />
+              <Register/>
             }
           ></Route>
           <Route
             path="/admin"
             element={
-              <Admin
-                id={id}
-                addCat={addCat}
-                fn={fn}
-                setCat={setCat}
-                catData={catData}
-                setCategory={setCategory}
-                setName={setName}
-                setId={setId}
-                tok={tok}
-                stat={stat}
-                setPrice={setPrice}
-                setImage={setImage}
-                setDes={setDes}
-                getCat={getCat}
-                deleteData={deleteData}
-                flag={flag}
-                setFlag={setFlag}
-                get={get}
-                edit={edit}
-                data={data}
-                upData={upData}
-              />
+              <Admin tok={tok}/>
             }
           />
+          <Route path="/Products" element={
+            <div className="container">
+              <Add />
+              <Render />
+            </div>
+          } />
           <Route path="*" element={<h1>404 page not found</h1>} />
         </Routes>
+        </DataContext.Provider>
       </UserContextPro>
     </BrowserRouter>
   );
 }
-
 export default App;
