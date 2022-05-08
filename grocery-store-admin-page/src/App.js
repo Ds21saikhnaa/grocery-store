@@ -5,7 +5,7 @@ import { useState } from "react";
 import { UserContextPro } from "./ctx";
 import { createContext } from "react";
 import axios from "axios";
-import { Add, Render } from "./components";
+import { Add, Render, Theme } from "./components";
 export const DataContext = createContext();
 function App() {
   const [cat, setCat] = useState("");
@@ -95,6 +95,7 @@ function App() {
   };
   return (
     <BrowserRouter>
+        <Theme>
       <UserContextPro>
         <DataContext.Provider value={{login,setUsername,setPassword,stat,register,stat1,id,fn,addCat,setCat,catData,
           setCategory,setName,setId,tok,setPrice,setImage,setDes,getCat,deleteData,flag,setFlag,get,edit, data,upData
@@ -128,6 +129,7 @@ function App() {
         </Routes>
         </DataContext.Provider>
       </UserContextPro>
+        </Theme>
     </BrowserRouter>
   );
 }
